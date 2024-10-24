@@ -1,7 +1,9 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { env } from "utils/config";
-import { APIError } from "utils/error";
+import { env } from "./utils/config";
+import { APIError } from "./utils/error";
+import { authRouter } from "./modules/auth/router";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json({
@@ -19,6 +23,9 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
     isSuccess: true,
   });
 });
+
+// authentication routes
+app.use(authRouter);
 
 app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
