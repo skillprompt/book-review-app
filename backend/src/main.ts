@@ -4,6 +4,15 @@ import { env } from "./utils/config";
 import { APIError } from "./utils/error";
 import { authRouter } from "./modules/auth/router";
 import cookieParser from "cookie-parser";
+import { createDBConnection } from "./utils/db";
+
+createDBConnection()
+  .then(() => {
+    console.log("Database connected successfully");
+  })
+  .catch((error) => {
+    console.error("Database connection error:", error);
+  });
 
 const app = express();
 
