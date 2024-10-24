@@ -1,13 +1,8 @@
 import { APIError } from "src/utils/error";
 import { UserModel } from "./model";
+import { TLoginControllerInput, TRegisterControllerInput } from "./validation";
 
-type TCreateUserServiceInput = {
-  email: string;
-  username: string;
-  password: string;
-};
-
-export async function createUserService(input: TCreateUserServiceInput) {
+export async function createUserService(input: TRegisterControllerInput) {
   const { email, username, password } = input;
 
   const user = await UserModel.findOne({ email });
@@ -26,7 +21,7 @@ export async function createUserService(input: TCreateUserServiceInput) {
   return newUser;
 }
 
-export async function loginService(input: TCreateUserServiceInput) {
+export async function loginService(input: TLoginControllerInput) {
   const { email, password } = input;
   const user = await UserModel.findOne({ email });
   if (!user) {

@@ -25,7 +25,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // authentication routes
-app.use(authRouter);
+app.use("/api/auth", authRouter);
 
 app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
