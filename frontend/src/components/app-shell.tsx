@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
+import { Toaster } from "react-hot-toast";
 
 const user = {
   name: "Tom Cook",
@@ -204,6 +205,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             {children}
           </div>
+          <Toaster />
         </main>
       </div>
     </>

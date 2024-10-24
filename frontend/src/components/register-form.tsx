@@ -17,6 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import { useRegisterUserMutation } from "../api/auth/query";
+import toast from "react-hot-toast";
 
 const registerSchema = z
   .object({
@@ -31,9 +33,12 @@ const registerSchema = z
   });
 
 export function RegisterForm() {
+  const registerUserMutation = useRegisterUserMutation();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "all",
@@ -47,7 +52,42 @@ export function RegisterForm() {
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = (data) => {
-    console.log(data);
+    try {
+      registerUserMutation.mutateAsync(
+        {
+          email: data.email,
+          username: data.username,
+          password: data.password,
+        },
+        {
+          onSuccess(data) {
+            console.log("data", data);
+            toast(data.message, {
+              duration: 2000,
+              position: "bottom-center",
+              style: {
+                background: "#22c55e",
+                color: "#fff",
+              },
+            });
+            reset();
+          },
+          onError(error) {
+            console.error("error", error);
+            toast(error.message, {
+              duration: 2000,
+              position: "bottom-center",
+              style: {
+                background: "#f87171",
+                color: "#fff",
+              },
+            });
+          },
+        }
+      );
+    } catch (error) {
+      console.error("error", error);
+    }
   };
 
   return (
@@ -160,8 +200,9 @@ export function RegisterForm() {
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          disabled={registerUserMutation.isPending}
         >
-          Save
+          {registerUserMutation.isPending ? "Registering..." : "Register"}
         </button>
       </div>
     </form>
