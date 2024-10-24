@@ -1,6 +1,7 @@
 import { APIError } from "src/utils/error";
 import { UserModel } from "./model";
 import { TLoginControllerInput, TRegisterControllerInput } from "./validation";
+import { comparePassword, generateToken, hashPassword } from "src/utils/auth";
 
 export async function createUserService(input: TRegisterControllerInput) {
   const { email, username, password } = input;
@@ -10,10 +11,12 @@ export async function createUserService(input: TRegisterControllerInput) {
     throw APIError.conflict("User already exists");
   }
 
+  const hashedPassword = await hashPassword(password);
+
   const newUser = new UserModel({
     email,
     username,
-    password,
+    password: hashedPassword,
   });
 
   await newUser.save();
@@ -28,7 +31,25 @@ export async function loginService(input: TLoginControllerInput) {
     throw APIError.unauthorized("Invalid credentials");
   }
 
-  return user;
+  const isMatch = await comparePassword(password, user.password);
+  if (!isMatch) {
+    throw APIError.unauthorized("Invalid credentials");
+  }
+
+  const token = generateToken({
+    id: user._id.toString(),
+    username: user.username,
+    email: user.email,
+  });
+
+  return {
+    user: {
+      id: user._id.toString(),
+      username: user.username,
+      email: user.email,
+    },
+    token,
+  };
 }
 
 export async function logoutService() {
