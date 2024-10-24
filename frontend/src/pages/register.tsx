@@ -4,7 +4,9 @@ import { RegisterForm } from "../components/register-form";
 export function RegisterPage() {
   return (
     <AppShell>
-      <RegisterForm />
+      <div className="max-w-3xl mx-auto">
+        <RegisterForm />
+      </div>
     </AppShell>
   );
 }

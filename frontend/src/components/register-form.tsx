@@ -18,7 +18,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useRegisterUserMutation } from "../api/auth/query";
-import toast from "react-hot-toast";
+import { errorToast, successToast } from "./toaster";
 
 const registerSchema = z
   .object({
@@ -62,26 +62,12 @@ export function RegisterForm() {
         {
           onSuccess(data) {
             console.log("data", data);
-            toast(data.message, {
-              duration: 2000,
-              position: "bottom-center",
-              style: {
-                background: "#22c55e",
-                color: "#fff",
-              },
-            });
+            successToast(data.message);
             reset();
           },
           onError(error) {
             console.error("error", error);
-            toast(error.message, {
-              duration: 2000,
-              position: "bottom-center",
-              style: {
-                background: "#f87171",
-                color: "#fff",
-              },
-            });
+            errorToast(error.message);
           },
         }
       );
