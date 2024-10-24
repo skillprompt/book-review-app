@@ -45,10 +45,24 @@ This is the backend server for the **Book Review App**, built with **Node.js, Ex
      ```
 
 3. **POST** `/api/auth/logout`:
+
    - Log out a user.
    - **Response:**
      ```json
      { "message": "User logged out successfully" }
+     ```
+
+4. **GET** `/api/auth/me`:
+   - Get information about the currently logged-in user.
+   - **Response:**
+     ```json
+     {
+       "user": {
+         "id": "user_id",
+         "username": "john_doe",
+         "email": "john@example.com"
+       }
+     }
      ```
 
 ---

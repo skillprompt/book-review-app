@@ -52,6 +52,15 @@ export async function loginService(input: TLoginControllerInput) {
   };
 }
 
+export async function getUserById(id: string) {
+  const user = await UserModel.findById(id);
+  if (!user) {
+    throw APIError.notFound("User not found");
+  }
+
+  return user;
+}
+
 export async function logoutService() {
   return true;
 }

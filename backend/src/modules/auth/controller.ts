@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { APIError } from "src/utils/error";
 import { LoginControllerSchema, RegisterControllerSchema } from "./validation";
-import { createUserService, loginService } from "./service";
+import { createUserService, getUserById, loginService } from "./service";
 import { TTokenPayload, verifyToken } from "src/utils/auth";
 
 export async function registerController(
@@ -166,4 +166,39 @@ export async function checkAuth(
   };
 
   next();
+}
+
+export async function meController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    if (!req.user) {
+      res.status(401).json({
+        message: "User not found",
+        isSuccess: false,
+        data: null,
+      });
+      return;
+    }
+
+    const user = await getUserById(req.user.id);
+
+    res.status(200).json({
+      message: "User retrieved successfully",
+      isSuccess: true,
+      data: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    if (error instanceof APIError) {
+      next(error);
+    } else {
+      next(new APIError(500, (error as Error).message));
+    }
+  }
 }
