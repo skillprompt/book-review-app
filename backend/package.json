@@ -17,8 +17,8 @@
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^22.7.9",
-    "tsx": "^4.19.1",
+    "@types/node": "^22.8.1",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   },
   "dependencies": {
@@ -28,7 +28,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.2",
+    "mongoose": "^8.7.3",
     "zod": "^3.23.8"
   }
 }
