@@ -41,7 +41,7 @@ export async function updateBookService(
   book.author = author;
   book.description = description;
 
-  await book.save();
+  await book.replaceOne({ _id: bookId });
 
   return book;
 }

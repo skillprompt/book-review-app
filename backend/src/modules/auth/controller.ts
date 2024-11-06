@@ -32,6 +32,7 @@ export async function registerController(
         username: user.username,
         id: user._id,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {

@@ -73,4 +73,6 @@ export async function checkAdmin(
     });
     return;
   }
+
+  next();
 }

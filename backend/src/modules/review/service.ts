@@ -43,12 +43,14 @@ export async function updateReviewService(
 
   const { reviewText, rating } = input;
 
-  review.reviewText = reviewText;
-  review.rating = rating;
+  const updated = await ReviewModel.findByIdAndUpdate(reviewId, {
+    reviewText,
+    rating,
+    bookId: review.bookId,
+    userId: review.userId,
+  });
 
-  await review.save();
-
-  return review;
+  return updated;
 }
 
 export async function deleteReviewService(id: string, ctx: TReviewCtx) {
