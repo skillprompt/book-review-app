@@ -6,9 +6,11 @@ export async function checkAuth(
   res: Response,
   next: NextFunction
 ) {
-  const cookie = req.headers["cookie"];
+  const cookies = req.cookies;
 
-  if (!cookie || !cookie.includes("token") || !cookie.includes("=")) {
+  const token = (cookies?.token as string) || "";
+
+  if (!token) {
     res.status(401).json({
       message: "Cookie not found or is invalid",
       isSuccess: false,
@@ -16,8 +18,6 @@ export async function checkAuth(
     });
     return;
   }
-
-  const token = cookie.split("=")[1];
 
   if (!token) {
     res.status(401).json({

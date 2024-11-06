@@ -76,3 +76,29 @@ export async function loginUser(
 
   return data;
 }
+
+/**
+ * For me api
+ */
+export type TMeOutput = {
+  message: string;
+  isSuccess: boolean;
+  data: { username: string; email: string; id: string; role: TUserRole };
+};
+
+export async function me(): Promise<TMeOutput> {
+  const res = await fetch(`${env.BACKEND_URL}/api/auth/me`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
