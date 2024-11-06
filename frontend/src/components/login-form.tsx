@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useLoginUserMutation } from "../api/auth/query";
 import { errorToast, successToast } from "./toaster";
@@ -11,6 +11,7 @@ const loginSchema = z.object({
 });
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const loginUserMutation = useLoginUserMutation();
 
   const {
@@ -38,6 +39,7 @@ export function LoginForm() {
           onSuccess(data) {
             successToast(data.message);
             reset();
+            navigate("/");
           },
           onError(error) {
             console.error("error", error);

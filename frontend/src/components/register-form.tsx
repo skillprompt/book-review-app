@@ -15,7 +15,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useRegisterUserMutation } from "../api/auth/query";
 import { errorToast, successToast } from "./toaster";
@@ -33,6 +33,7 @@ const registerSchema = z
   });
 
 export function RegisterForm() {
+  const navigate = useNavigate();
   const registerUserMutation = useRegisterUserMutation();
 
   const {
@@ -63,6 +64,7 @@ export function RegisterForm() {
           onSuccess(data) {
             successToast(data.message);
             reset();
+            navigate("/login");
           },
           onError(error) {
             console.error("error", error);
