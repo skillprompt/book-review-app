@@ -54,7 +54,23 @@ export async function checkAuth(
     id: payload.id,
     username: payload.username,
     email: payload.email,
+    role: payload.role,
   };
 
   next();
+}
+
+export async function checkAdmin(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.user.role !== "admin") {
+    res.status(403).json({
+      message: "Unauthorized: Not an admin",
+      isSuccess: false,
+      data: null,
+    });
+    return;
+  }
 }

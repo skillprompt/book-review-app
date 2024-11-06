@@ -17,6 +17,7 @@ export async function createUserService(input: TRegisterControllerInput) {
     email,
     username,
     password: hashedPassword,
+    role: "user",
   });
 
   await newUser.save();
@@ -40,6 +41,7 @@ export async function loginService(input: TLoginControllerInput) {
     id: user._id.toString(),
     username: user.username,
     email: user.email,
+    role: user.role,
   });
 
   return {

@@ -9,7 +9,7 @@ import {
   meController,
   registerController,
 } from "./controller";
-import { checkAuth } from "./middlewares";
+import { checkAuth } from "./middleware";
 
 function createAuthRouter() {
   const router = Router();

@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { env } from "./config";
 
+export type TUserRole = "admin" | "user";
+
 export async function hashPassword(password: string) {
   const hashed = await bcrypt.hash(password, 10);
   return hashed;
@@ -19,6 +21,7 @@ export type TTokenPayload = {
   id: string;
   username: string;
   email: string;
+  role: TUserRole;
 };
 
 const secretKey = env.JWT_SECRET;
