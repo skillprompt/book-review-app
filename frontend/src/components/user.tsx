@@ -15,7 +15,7 @@ export function User() {
   }
 
   if (isError) {
-    return <div>{error.message}</div>;
+    return <div className="text-white">{error.message}</div>;
   }
 
   if (!data) {

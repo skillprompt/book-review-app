@@ -102,3 +102,28 @@ export async function me(): Promise<TMeOutput> {
 
   return data;
 }
+
+/**
+ * For logout api
+ */
+export type TLogoutOutput = {
+  message: string;
+  isSuccess: boolean;
+};
+
+export async function logout(): Promise<TLogoutOutput> {
+  const res = await fetch(`${env.BACKEND_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}

@@ -1,10 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   loginUser,
+  logout,
   me,
   registerUser,
   TLoginUserInput,
   TLoginUserOutput,
+  TLogoutOutput,
   TMeOutput,
   TRegisterUserInput,
   TRegisterUserOutput,
@@ -29,5 +31,12 @@ export function useMeQuery() {
   return useQuery<TMeOutput, Error>({
     queryKey: ["me"],
     queryFn: me,
+  });
+}
+
+// for logout api
+export function useLogoutMutation() {
+  return useMutation<TLogoutOutput, Error, object>({
+    mutationFn: logout,
   });
 }
