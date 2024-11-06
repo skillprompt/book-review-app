@@ -5,6 +5,7 @@ import { APIError } from "./utils/error";
 import { authRouter } from "./modules/auth/router";
 import cookieParser from "cookie-parser";
 import { createDBConnection } from "./utils/db";
+import { bookRouter } from "./modules/book/router";
 
 createDBConnection()
   .then(() => {
@@ -35,6 +36,9 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 // authentication routes
 app.use("/api/auth", authRouter);
+
+// book routes
+app.use("/api/books", bookRouter);
 
 app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
