@@ -25,10 +25,13 @@ export async function createBookService(input: TAddBookControllerInput) {
   return newBook;
 }
 
-export async function updateBookService(input: TUpdateBookControllerInput) {
-  const { id, title, genre, author, description } = input;
+export async function updateBookService(
+  bookId: string,
+  input: TUpdateBookControllerInput
+) {
+  const { title, genre, author, description } = input;
 
-  const book = await BookModel.findById(id);
+  const book = await BookModel.findById(bookId);
   if (!book) {
     throw APIError.notFound("Book not found");
   }

@@ -56,6 +56,8 @@ export async function updateBookController(
   try {
     const body = req.body;
 
+    const bookId = req.params.bookId;
+
     const { success, error, data } = UpdateBookControllerSchema.safeParse(body);
     if (!success) {
       const errors = error.flatten().fieldErrors;
@@ -68,7 +70,7 @@ export async function updateBookController(
       return;
     }
 
-    const book = await updateBookService(data);
+    const book = await updateBookService(bookId, data);
 
     res.status(201).json({
       message: "Book updated sucessfully",
