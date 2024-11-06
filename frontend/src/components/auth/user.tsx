@@ -1,4 +1,4 @@
-import { useMeQuery } from "../api/auth/query";
+import { useMeQuery } from "../../api/auth/query";
 
 export const userData = {
   name: "Tom Cook",

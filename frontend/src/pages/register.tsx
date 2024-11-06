@@ -1,5 +1,5 @@
 import { AppShell } from "../components/app-shell";
-import { RegisterForm } from "../components/register-form";
+import { RegisterForm } from "../components/auth/register-form";
 
 export function RegisterPage() {
   return (

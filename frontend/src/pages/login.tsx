@@ -1,5 +1,5 @@
 import { AppShell } from "../components/app-shell";
-import { LoginForm } from "../components/login-form";
+import { LoginForm } from "../components/auth/login-form";
 
 export function LoginPage() {
   return (

@@ -1,5 +1,5 @@
-import { useLogoutMutation } from "../api/auth/query";
-import { errorToast, successToast } from "./toaster";
+import { useLogoutMutation } from "../../api/auth/query";
+import { errorToast, successToast } from "../toaster";
 
 export function Logout() {
   const logoutMutation = useLogoutMutation();

@@ -10,16 +10,11 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Toaster } from "react-hot-toast";
-import { User } from "./user";
-import { Logout } from "./logout";
+import { User } from "./auth/user";
+import { Link } from "react-router-dom";
+import { Logout } from "./auth/logout";
 
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
-];
+const navigation = [{ name: "Dashboard", href: "/dashboard", current: false }];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -47,9 +42,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         aria-current={item.current ? "page" : undefined}
                         className={clsx(
                           item.current
@@ -59,7 +54,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
