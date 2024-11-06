@@ -63,6 +63,7 @@ export async function updateReviewController(
   try {
     const body = req.body;
 
+    const userId = req.user.id;
     const reviewId = req.params.reviewId;
 
     const { success, error, data } =
@@ -78,7 +79,14 @@ export async function updateReviewController(
       return;
     }
 
-    const review = await updateReviewService(reviewId, data);
+    const review = await updateReviewService(
+      reviewId,
+      {
+        userId,
+        bookId: "",
+      },
+      data
+    );
 
     res.status(201).json({
       message: "Review updated sucessfully",
@@ -101,7 +109,13 @@ export async function deleteReviewController(
 ) {
   try {
     const reviewId = req.params.reviewId;
-    const review = await deleteReviewService(reviewId);
+
+    const userId = req.user.id;
+
+    const review = await deleteReviewService(reviewId, {
+      bookId: "",
+      userId,
+    });
 
     res.status(201).json({
       message: "Review deleted sucessfully",

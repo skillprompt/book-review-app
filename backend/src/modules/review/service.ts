@@ -7,14 +7,14 @@ import {
 import { ReviewModel } from "./model";
 
 export async function createReviewService(
-  context: TReviewCtx,
+  ctx: TReviewCtx,
   input: TAddReviewControllerInput
 ) {
   const { rating, reviewText } = input;
 
   const newReview = new ReviewModel({
-    bookId: context.bookId,
-    userId: context.userId,
+    bookId: ctx.bookId,
+    userId: ctx.userId,
     rating,
     reviewText,
   });
@@ -26,11 +26,19 @@ export async function createReviewService(
 
 export async function updateReviewService(
   reviewId: string,
+  ctx: TReviewCtx,
   input: TUpdateReviewControllerInput
 ) {
   const review = await ReviewModel.findById(reviewId);
   if (!review) {
     throw APIError.notFound("Review not found");
+  }
+
+  /**
+   * Check if the review belongs to the user
+   */
+  if (review.userId?.toString() !== ctx.userId) {
+    throw APIError.forbidden("You are not authorized to update this review");
   }
 
   const { reviewText, rating } = input;
@@ -43,10 +51,17 @@ export async function updateReviewService(
   return review;
 }
 
-export async function deleteReviewService(id: string) {
-  const review = await ReviewModel.findByIdAndDelete(id);
+export async function deleteReviewService(id: string, ctx: TReviewCtx) {
+  const review = await ReviewModel.findById(id);
   if (!review) {
     throw APIError.notFound("Review not found");
+  }
+
+  /**
+   * Check if the review belongs to the user
+   */
+  if (review.userId?.toString() !== ctx.userId) {
+    throw APIError.forbidden("You are not authorized to delete this review");
   }
 
   await ReviewModel.deleteOne({ _id: id });
