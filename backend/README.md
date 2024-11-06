@@ -45,20 +45,20 @@ This document provides a **high-level overview** of the backend system for the *
 
 ## **High-Level API Design**
 
-| **Feature**          | **Method** | **Endpoint**         | **Description**                                    |
-| -------------------- | ---------- | -------------------- | -------------------------------------------------- |
-| **Register User**    | POST       | `/api/auth/register` | Register a new user account.                       |
-| **Login**            | POST       | `/api/auth/login`    | User login and receive JWT token.                  |
-| **Logout**           | POST       | `/api/auth/logout`   | Invalidate the user session.                       |
-| **Get User Info**    | GET        | `/api/auth/me`       | Retrieve information about the logged-in user.     |
-| **List Books**       | GET        | `/api/books`         | Retrieve a list of all books.                      |
-| **Get Book Details** | GET        | `/api/books/:id`     | Get details of a specific book, including reviews. |
-| **Add New Book**     | POST       | `/api/books`         | Add a new book (admin-only).                       |
-| **Update Book**      | PUT        | `/api/books/:id`     | Update book details (admin-only).                  |
-| **Delete Book**      | DELETE     | `/api/books/:id`     | Delete a book (admin-only).                        |
-| **Submit Review**    | POST       | `/api/reviews`       | Add a review for a book.                           |
-| **Update Review**    | PUT        | `/api/reviews/:id`   | Update a review (author-only).                     |
-| **Delete Review**    | DELETE     | `/api/reviews/:id`   | Delete a review (author or admin-only).            |
+| **Feature**          | **Method** | **Endpoint**                    | **Description**                                    |
+| -------------------- | ---------- | ------------------------------- | -------------------------------------------------- |
+| **Register User**    | POST       | `/api/auth/register`            | Register a new user account.                       |
+| **Login**            | POST       | `/api/auth/login`               | User login and receive JWT token.                  |
+| **Logout**           | POST       | `/api/auth/logout`              | Invalidate the user session.                       |
+| **Get User Info**    | GET        | `/api/auth/me`                  | Retrieve information about the logged-in user.     |
+| **List Books**       | GET        | `/api/books`                    | Retrieve a list of all books.                      |
+| **Get Book Details** | GET        | `/api/books/:id`                | Get details of a specific book, including reviews. |
+| **Add New Book**     | POST       | `/api/books`                    | Add a new book (admin-only).                       |
+| **Update Book**      | POST       | `/api/books/:id`                | Update book details (admin-only).                  |
+| **Delete Book**      | DELETE     | `/api/books/:id`                | Delete a book (admin-only).                        |
+| **Submit Review**    | POST       | `/api/reviews/:bookId`          | Add a review for a book.                           |
+| **Update Review**    | POST       | `/api/reviews/update/:reviewId` | Update a review (author-only).                     |
+| **Delete Review**    | DELETE     | `/api/reviews/:reviewId`        | Delete a review (author or admin-only).            |
 
 ---
 
