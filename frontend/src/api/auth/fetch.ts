@@ -1,5 +1,8 @@
 import { env } from "../../config";
 
+/**
+ * For register api
+ */
 export type TRegisterUserOutput = {
   message: string;
   isSuccess: boolean;
@@ -22,6 +25,45 @@ export async function registerUser(
     },
     body: JSON.stringify({
       username: input.username,
+      email: input.email,
+      password: input.password,
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+/**
+ * For login api
+ */
+export type TUserRole = "admin" | "user";
+
+export type TLoginUserOutput = {
+  message: string;
+  isSuccess: boolean;
+  data: { username: string; email: string; id: string; role: TUserRole };
+};
+
+export type TLoginUserInput = {
+  email: string;
+  password: string;
+};
+
+export async function loginUser(
+  input: TLoginUserInput
+): Promise<TLoginUserOutput> {
+  const res = await fetch(`${env.BACKEND_URL}/api/auth/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
       email: input.email,
       password: input.password,
     }),
