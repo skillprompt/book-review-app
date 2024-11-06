@@ -5,6 +5,7 @@ import {
   TUpdateReviewControllerInput,
 } from "./validation";
 import { ReviewModel } from "./model";
+import mongoose from "mongoose";
 
 export async function createReviewService(
   ctx: TReviewCtx,
@@ -43,14 +44,12 @@ export async function updateReviewService(
 
   const { reviewText, rating } = input;
 
-  const updated = await ReviewModel.findByIdAndUpdate(reviewId, {
-    reviewText,
-    rating,
-    bookId: review.bookId,
-    userId: review.userId,
-  });
+  review.reviewText = reviewText;
+  review.rating = rating;
 
-  return updated;
+  await review.save();
+
+  return review;
 }
 
 export async function deleteReviewService(id: string, ctx: TReviewCtx) {
