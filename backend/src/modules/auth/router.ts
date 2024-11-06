@@ -4,12 +4,12 @@
 
 import { Router } from "express";
 import {
-  checkAuth,
   loginController,
   logoutController,
   meController,
   registerController,
 } from "./controller";
+import { checkAuth } from "./middlewares";
 
 function createAuthRouter() {
   const router = Router();
