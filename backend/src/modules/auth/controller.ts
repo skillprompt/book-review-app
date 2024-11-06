@@ -133,6 +133,7 @@ export async function meController(
         id: user._id,
         username: user.username,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {

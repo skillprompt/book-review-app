@@ -5,12 +5,13 @@ import {
   getReviewsByBookIdController,
   updateReviewController,
 } from "./controller";
+import { checkAuth } from "../auth/middleware";
 
 function createReviewRouter() {
   const router = Router();
-  router.post("/", addReviewController);
-  router.post("/:reviewId", updateReviewController);
-  router.delete("/:reviewId", deleteReviewController);
+  router.post("/", checkAuth, addReviewController);
+  router.post("/:reviewId", checkAuth, updateReviewController);
+  router.delete("/:reviewId", checkAuth, deleteReviewController);
 
   router.get("/:bookId", getReviewsByBookIdController);
 
