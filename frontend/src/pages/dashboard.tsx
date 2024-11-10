@@ -1,9 +1,10 @@
 import { AppShell } from "../components/app-shell";
+import { ListBooks } from "../components/book/list-book";
 
 export function DashboardPage() {
   return (
     <AppShell>
-      <h1>Dashboard</h1>
+      <ListBooks />
     </AppShell>
   );
 }
